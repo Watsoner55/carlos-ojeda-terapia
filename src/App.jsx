@@ -1,17 +1,50 @@
+import { useState } from "react"
+import perfilImg from "./assets/carlos-ojeda.png"
+
 const areas = [
-  ["Ansiedad", "Cuando el cuerpo vive en alerta constante, anticipando problemas y agotándose incluso cuando aparentemente todo está bien."],
-  ["Adicciones", "Alcohol, consumo, juego, pornografía u otros hábitos que empezaron aliviando algo y acabaron ocupando demasiado espacio."],
-  ["Autoestima e inseguridad", "Trabajar la forma en que te miras, dudas de ti o sientes que nunca eres suficiente."],
-  ["Bloqueo vital", "Etapas donde sabes que algo tiene que cambiar, pero no encuentras dirección, energía o claridad."],
-  ["Gestión emocional", "Aprender a relacionarte con emociones intensas sin reprimirlas ni dejar que controlen toda tu vida."],
-  ["Identidad y dirección", "Explorar quién eres más allá de la ansiedad, el consumo, la culpa o las expectativas externas."],
+  [
+    "Ansiedad",
+    "Cuando el cuerpo vive en alerta constante, anticipando problemas y agotándose incluso cuando aparentemente todo está bien.",
+  ],
+  [
+    "Adicciones",
+    "Alcohol, consumo, juego, pornografía u otros hábitos que empezaron aliviando algo y acabaron ocupando demasiado espacio.",
+  ],
+  [
+    "Autoestima e inseguridad",
+    "Trabajar la forma en que te miras, dudas de ti o sientes que nunca eres suficiente.",
+  ],
+  [
+    "Bloqueo vital",
+    "Etapas donde sabes que algo tiene que cambiar, pero no encuentras dirección, energía o claridad.",
+  ],
+  [
+    "Gestión emocional",
+    "Aprender a relacionarte con emociones intensas sin reprimirlas ni dejar que controlen toda tu vida.",
+  ],
+  [
+    "Identidad y dirección",
+    "Explorar quién eres más allá de la ansiedad, el consumo, la culpa o las expectativas externas.",
+  ],
 ]
 
 const methods = [
-  ["TCC", "Comprender la relación entre pensamientos, emociones, conducta y contexto."],
-  ["ACT", "Acceptance and Commitment Therapy: trabajar aceptación, valores y acción comprometida."],
-  ["Entrevista motivacional", "Acompañar la ambivalencia sin sermones, culpa ni presión inútil."],
-  ["Análisis funcional", "Mirar qué función cumple cada conducta antes de intentar cambiarla."],
+  [
+    "TCC",
+    "Comprender la relación entre pensamientos, emociones, conducta y contexto.",
+  ],
+  [
+    "ACT",
+    "Acceptance and Commitment Therapy: trabajar aceptación, valores y acción comprometida.",
+  ],
+  [
+    "Entrevista motivacional",
+    "Acompañar la ambivalencia sin sermones, culpa ni presión inútil.",
+  ],
+  [
+    "Análisis funcional",
+    "Mirar qué función cumple cada conducta antes de intentar cambiarla.",
+  ],
 ]
 
 const process = [
@@ -21,290 +54,395 @@ const process = [
   "Revisión de avances y construcción de alternativas más estables.",
 ]
 
+const navLinks = [
+  ["Inicio", "#inicio"],
+  ["Áreas", "#areas"],
+  ["Enfoque", "#enfoque"],
+  ["Proceso", "#proceso"],
+  ["Contacto", "#contacto"],
+]
+
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const whatsappNumber = "34618430395"
+
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+    "Hola Carlos, he visto tu web y me gustaría pedir información."
+  )}`
+
+  const closeMenu = () => {
+    setMenuOpen(false)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+
+    const nombre = formData.get("nombre") || ""
+    const email = formData.get("email") || ""
+    const mensaje = formData.get("mensaje") || ""
+
+    const texto = `
+Hola Carlos, he visto tu web y me gustaría pedir información.
+
+Nombre: ${nombre}
+Correo: ${email}
+Motivo: ${mensaje}
+    `.trim()
+
+    window.open(
+      `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(texto)}`,
+      "_blank"
+    )
+  }
+
   return (
     <main className="min-h-screen bg-[#f4efe7] text-[#173537] antialiased">
       {/* NAV */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#173537]/95 backdrop-blur-xl border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex items-center justify-between">
-          <a href="#inicio" className="text-[#f7efe4] font-semibold text-lg tracking-wide">
-            Carlos Ojeda <span className="text-[#d7bd8d] font-normal ml-2">· Terapia</span>
+          <a
+            href="#inicio"
+            className="text-[#f7efe4] font-semibold text-lg tracking-wide"
+          >
+            Carlos Ojeda
+            <span className="text-[#d7bd8d] font-normal ml-2">
+              · Mentoría terapéutica
+            </span>
           </a>
 
           <nav className="hidden md:flex gap-8 text-sm text-[#f7efe4]/80">
-            <a href="#sobre-mi" className="hover:text-[#d7bd8d]">Sobre mí</a>
-            <a href="#areas" className="hover:text-[#d7bd8d]">Áreas</a>
-            <a href="#enfoque" className="hover:text-[#d7bd8d]">Enfoque</a>
-            <a href="#contacto" className="hover:text-[#d7bd8d]">Contacto</a>
+            {navLinks.slice(1).map(([label, href]) => (
+              <a
+                key={label}
+                href={href}
+                className="hover:text-[#d7bd8d] transition"
+              >
+                {label}
+              </a>
+            ))}
           </nav>
 
-          <a href="#contacto" className="hidden sm:inline-block rounded-full bg-[#d7bd8d] px-5 py-2.5 text-sm font-medium text-[#173537] hover:bg-[#e4cca0] transition">
-            Primera sesión
-          </a>
+          <button
+            onClick={() => setMenuOpen(true)}
+            className="ml-6 rounded-full border border-[#d7bd8d]/40 px-4 py-2 text-sm font-medium text-[#f7efe4] hover:bg-white/10 transition"
+          >
+            ☰ Menú
+          </button>
         </div>
       </header>
 
+      {/* MENÚ LATERAL */}
+      <aside
+        className={`fixed top-0 right-0 z-[70] h-full w-[320px] max-w-[85vw] bg-[#173537] text-[#f7efe4] shadow-2xl transition-transform duration-300 ${
+          menuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex h-full flex-col px-7 py-7">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.25em] text-[#d7bd8d]">
+                Navegación
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold">
+                Carlos Ojeda
+              </h2>
+            </div>
+
+            <button
+              onClick={closeMenu}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-2xl hover:bg-white/10 transition"
+            >
+              ×
+            </button>
+          </div>
+
+          <nav className="mt-12 flex flex-col gap-2">
+            {navLinks.map(([label, href]) => (
+              <a
+                key={label}
+                href={href}
+                onClick={closeMenu}
+                className="rounded-2xl px-4 py-4 text-lg text-[#f7efe4]/85 hover:bg-white/10 hover:text-[#d7bd8d] transition"
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="mt-auto space-y-4">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex w-full items-center justify-center rounded-full bg-[#d7bd8d] px-5 py-4 font-semibold text-[#173537] hover:bg-[#e4cca0] transition"
+            >
+              WhatsApp
+            </a>
+
+            <p className="text-xs leading-5 text-[#f7efe4]/55">
+              Un menú lateral, porque perderse haciendo scroll por una web de ayuda psicológica sería bastante irónico.
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      {menuOpen && (
+        <button
+          onClick={closeMenu}
+          className="fixed inset-0 z-[60] bg-black/45"
+          aria-label="Cerrar menú"
+        />
+      )}
+
       {/* HERO */}
-      <section id="inicio" className="relative overflow-hidden bg-[#173537] pt-28 text-[#f7efe4]">
+      <section
+        id="inicio"
+        className="relative overflow-hidden bg-[#173537] pt-28 text-[#f7efe4]"
+      >
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute -left-20 top-20 h-80 w-80 rounded-full bg-[#d7bd8d]/20 blur-3xl" />
-          <div className="absolute right-0 bottom-10 h-96 w-96 rounded-full bg-[#8a6d4d]/20 blur-3xl" />
+          <div className="absolute -left-20 top-20 h-80 w-80 rounded-full bg-[#d7bd8d]/20 blur-3xl"></div>
+          <div className="absolute right-0 bottom-10 h-96 w-96 rounded-full bg-[#8a6d4d]/20 blur-3xl"></div>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28 grid lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center">
           <div>
             <p className="mb-6 inline-flex rounded-full border border-[#d7bd8d]/30 px-4 py-2 text-sm text-[#d7bd8d]">
-              Terapia · Adicciones · Ansiedad · Cambio personal
+              Acompañamiento · Adicciones · Ansiedad · Cambio personal
             </p>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.02] tracking-tight">
-              A veces no necesitas que te arreglen.
-              <span className="block text-[#d7bd8d]">Necesitas entender qué te está pasando.</span>
+              No todo lo que te duele se ve desde fuera.
+              <span className="block text-[#d7bd8d]">
+                Y aun así merece ser escuchado.
+              </span>
             </h1>
 
             <p className="mt-8 max-w-2xl text-lg md:text-xl leading-8 md:leading-9 text-[#f7efe4]/80">
-              Soy Carlos Ojeda, estudiante avanzado del Grado de Psicología y Experto Universitario en Drogodependencias y otras Adicciones por la Universitat de Barcelona. Mi interés por la ansiedad, las adicciones y los procesos de cambio nace también de haber conocido de cerca lo que implica pedir ayuda, sostener un tratamiento y reconstruirse con tiempo.
+              Soy Carlos Ojeda, estudiante avanzado del Grado de Psicología y Experto Universitario en Drogodependencias y otras Adicciones por la Universitat de Barcelona. Acompaño procesos relacionados con ansiedad, adicciones, inseguridad y cambio personal desde una mirada humana, funcional y basada en evidencia.
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
-              <a href="#contacto" className="rounded-full bg-[#d7bd8d] px-7 py-3 text-center font-medium text-[#173537] hover:bg-[#e4cca0] transition">
-                Reservar primera sesión →
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full bg-[#d7bd8d] px-7 py-3 text-center font-medium text-[#173537] hover:bg-[#e4cca0] transition"
+              >
+                Primera toma de contacto
               </a>
-              <a href="#enfoque" className="rounded-full border border-[#f7efe4]/25 px-7 py-3 text-center font-medium text-[#f7efe4] hover:bg-[#f7efe4]/10 transition">
+
+              <a
+                href="#enfoque"
+                className="rounded-full border border-[#f7efe4]/25 px-7 py-3 text-center font-medium text-[#f7efe4] hover:bg-white/10 transition"
+              >
                 Conocer el enfoque
               </a>
             </div>
           </div>
 
-          <div className="relative">
-            <div className="aspect-[4/5] rounded-[2rem] overflow-hidden border border-[#f7efe4]/15 bg-[#2d4b4b] shadow-2xl">
-              <div className="relative flex h-full flex-col justify-end bg-[radial-gradient(circle_at_35%_20%,rgba(215,189,141,0.22),transparent_34%),linear-gradient(145deg,#294d4d,#102a2c)] p-8 md:p-10">
-                <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.35),transparent_45%)]" />
+          <div className="relative flex justify-center">
+            <div className="absolute inset-0 bg-[#d8b98a]/20 blur-3xl rounded-[40px]"></div>
 
-                <div className="relative z-10 rounded-[2rem] border border-white/10 bg-white/10 p-7 md:p-8 backdrop-blur-md">
-                  <p className="text-sm uppercase tracking-[0.3em] text-[#d7bd8d]">
-                    Carlos Ojeda · Terapeuta
-                  </p>
-                  <h3 className="mt-5 text-3xl md:text-4xl font-semibold leading-tight">
-                    Ansiedad, adicciones y cambio personal desde una mirada humana y basada en evidencia.
-                  </h3>
-                  <p className="mt-6 leading-8 text-[#f7efe4]/75">
-                    Un espacio para entender patrones, salir del modo supervivencia y empezar a construir una vida más estable, consciente y coherente contigo.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <img
+              src={perfilImg}
+              alt="Carlos Ojeda"
+              className="relative w-full max-w-[500px] rounded-[36px] object-cover shadow-2xl border border-[#d8c9b5]/20"
+            />
           </div>
         </div>
       </section>
 
-      {/* SOBRE MI */}
-      <section id="sobre-mi" className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14">
-          <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#8a6d4d]">
-              Sobre mí
-            </p>
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
-              Una forma de acompañar que no necesita disfrazarse.
-            </h2>
-          </div>
-
-          <div className="space-y-6 text-lg leading-8 text-[#394b49]">
-            <p>
-              Mi trabajo nace de una idea sencilla: las personas no suelen sufrir porque sean débiles, sino porque han aprendido a sobrevivir con las herramientas que tenían disponibles.
-            </p>
-            <p>
-              Durante años conviví con ansiedad y con una relación problemática con el alcohol. Sé lo que es perder confianza en uno mismo, vivir atrapado en patrones que desde fuera parecen fáciles de cortar y descubrir que la fuerza de voluntad, por sí sola, no siempre basta.
-            </p>
-            <p>
-              Pasar por un proceso terapéutico real me permitió entender algo importante: detrás de muchas conductas destructivas no suele haber falta de voluntad, sino dolor, evitación y maneras aprendidas de intentar sostenerse.
-            </p>
-            <p>
-              Precisamente por eso decidí orientar mi camino hacia la Psicología y las adicciones. Porque sé el impacto que puede tener que alguien te mire sin reducirte a tu peor momento, sin sermones y sin etiquetas fáciles.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* POR QUE */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
-        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 rounded-[2rem] border border-[#d8c9b5] bg-white/55 p-8 md:p-10">
-          <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#8a6d4d]">
-              Por qué trabajo en esto
-            </p>
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
-              No elegí este camino desde la distancia.
-            </h2>
-          </div>
-
-          <div className="space-y-6 text-lg leading-8 text-[#56605e]">
-            <p>
-              Durante mucho tiempo entendí las adicciones y la ansiedad desde dentro, no desde un libro. Sé lo que es vivir atrapado en dinámicas que prometen aliviar el dolor a corto plazo mientras poco a poco van reduciendo tu libertad.
-            </p>
-            <p>
-              También sé lo difícil que puede ser pedir ayuda, confiar en alguien o sentir que todavía hay salida cuando llevas años funcionando en automático.
-            </p>
-            <p>
-              Parte de mi forma de acompañar nace precisamente de ahí: de haber comprobado que el cambio real no suele aparecer a través de la culpa, los sermones o la fuerza de voluntad aislada, sino a través de comprensión, trabajo profundo y tiempo.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* AREAS */}
-      <section id="areas" className="bg-[#e8ddcf] px-6 lg:px-10 py-24">
+      {/* ÁREAS */}
+      <section id="areas" className="px-6 lg:px-10 py-24 bg-[#f4efe7]">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-14 max-w-4xl">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#8a6d4d]">
-              En qué puedo ayudarte
+          <div className="max-w-2xl">
+            <p className="text-sm uppercase tracking-[0.3em] text-[#8a6d4d]">
+              Áreas de trabajo
             </p>
-            <p className="mb-5 max-w-3xl text-lg leading-8 text-[#56605e]">
-              Trabajo especialmente con ansiedad, adicciones, regulación emocional, autoestima y procesos de cambio personal. El objetivo no es juzgar a la persona por lo que hace, sino entender qué función cumple eso en su vida y cómo empezar a construir alternativas más sanas y estables.
-            </p>
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
-              Áreas en las que acompaño desde una mirada humana, funcional y basada en evidencia.
+
+            <h2 className="mt-4 text-4xl md:text-5xl font-semibold text-[#173537]">
+              Problemas que suelen esconder algo más profundo.
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-            {areas.map(([title, text]) => (
-              <div key={title} className="rounded-3xl bg-[#f7efe4]/85 p-7 shadow-sm hover:-translate-y-1 hover:shadow-xl transition">
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#173537] text-2xl text-[#d7bd8d]">
-                  ◌
-                </div>
-                <h3 className="text-xl font-semibold">{title}</h3>
-                <p className="mt-3 leading-7 text-[#56605e]">{text}</p>
-              </div>
+          <div className="mt-16 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {areas.map(([title, desc]) => (
+              <article
+                key={title}
+                className="rounded-[32px] border border-[#d8c9b5] bg-white p-8 shadow-sm hover:-translate-y-1 transition"
+              >
+                <h3 className="text-2xl font-semibold text-[#173537]">
+                  {title}
+                </h3>
+
+                <p className="mt-5 leading-8 text-[#425756]">
+                  {desc}
+                </p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
       {/* ENFOQUE */}
-      <section id="enfoque" className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-        <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-12">
+      <section
+        id="enfoque"
+        className="bg-[#173537] px-6 lg:px-10 py-24 text-[#f7efe4]"
+      >
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-[0.8fr_1.2fr] gap-16">
           <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#8a6d4d]">
+            <p className="text-sm uppercase tracking-[0.3em] text-[#d7bd8d]">
               Enfoque terapéutico
             </p>
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
-              Cada persona tiene una historia. Y cada conducta, una función.
+
+            <h2 className="mt-4 text-4xl md:text-5xl font-semibold leading-tight">
+              Sin humo motivacional.
+              <span className="block text-[#d7bd8d]">
+                Mirar la conducta con honestidad.
+              </span>
             </h2>
-            <p className="mt-6 text-lg leading-8 text-[#56605e]">
-              Antes de intentar cambiar algo, conviene comprender qué lo mantiene. La terapia no va de aplicar técnicas como recetas, sino de construir una explicación útil y trabajar desde ahí.
+
+            <p className="mt-8 text-lg leading-8 text-[#f7efe4]/75">
+              El objetivo no es convertirte en alguien perfecto, sino entender qué mantiene el sufrimiento y construir alternativas más útiles y sostenibles.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-5">
-            {methods.map(([title, text]) => (
-              <div key={title} className="rounded-3xl bg-white/60 p-7 shadow-sm">
-                <div className="mb-5 text-2xl text-[#8a6d4d]">●</div>
-                <h3 className="text-xl font-semibold">{title}</h3>
-                <p className="mt-3 leading-7 text-[#56605e]">{text}</p>
-              </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {methods.map(([title, desc]) => (
+              <article
+                key={title}
+                className="rounded-[30px] border border-white/10 bg-white/5 p-8 backdrop-blur-md"
+              >
+                <h3 className="text-2xl font-semibold text-[#d7bd8d]">
+                  {title}
+                </h3>
+
+                <p className="mt-5 leading-8 text-[#f7efe4]/80">
+                  {desc}
+                </p>
+              </article>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* MANIFIESTO */}
-      <section className="relative overflow-hidden bg-[#173537] px-6 lg:px-10 py-28 text-[#f7efe4]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(215,189,141,0.22),transparent_35%)]" />
-        <div className="relative max-w-5xl mx-auto text-center">
-          <p className="mb-6 text-sm font-semibold uppercase tracking-[0.3em] text-[#d7bd8d]">
-            Manifiesto
-          </p>
-          <h2 className="text-4xl md:text-6xl font-semibold leading-tight tracking-tight">
-            No se trata de convertirte en otra persona. Se trata de entender por qué llevas tanto tiempo sobreviviendo como puedes.
-          </h2>
         </div>
       </section>
 
       {/* PROCESO */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12">
-          <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#8a6d4d]">
-              Proceso terapéutico
+      <section id="proceso" className="px-6 lg:px-10 py-24 bg-[#f4efe7]">
+        <div className="max-w-5xl mx-auto">
+          <div className="max-w-2xl">
+            <p className="text-sm uppercase tracking-[0.3em] text-[#8a6d4d]">
+              Cómo sería el proceso
             </p>
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
-              Un proceso claro para que no tengas que venir adivinando qué toca hacer.
+
+            <h2 className="mt-4 text-4xl md:text-5xl font-semibold text-[#173537]">
+              Un espacio para entender patrones y empezar a moverlos.
             </h2>
           </div>
 
-          <div className="space-y-4">
-            {process.map((item, index) => (
-              <div key={item} className="flex gap-5 rounded-3xl bg-white/60 p-6 shadow-sm">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#173537] text-sm font-semibold text-[#d7bd8d]">
+          <div className="mt-16 space-y-6">
+            {process.map((step, index) => (
+              <div
+                key={index}
+                className="flex gap-6 rounded-[28px] border border-[#d8c9b5] bg-white p-8"
+              >
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#173537] text-[#f7efe4] font-semibold">
                   {index + 1}
                 </div>
-                <p className="pt-1 text-lg leading-7 text-[#394b49]">{item}</p>
+
+                <p className="flex-1 text-lg leading-8 text-[#425756]">
+                  {step}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* NOTA LEGAL */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
-        <div className="rounded-[2rem] border border-[#d8c9b5] bg-white/55 p-8 md:p-10">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#8a6d4d]">
-            Nota importante
-          </p>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
-            Un espacio de acompañamiento, no un sustituto de atención sanitaria.
-          </h2>
-          <p className="mt-5 max-w-4xl text-lg leading-8 text-[#56605e]">
-            Este espacio está orientado al acompañamiento, la orientación personal y el trabajo sobre hábitos, ansiedad, regulación emocional y procesos de cambio. No sustituye un tratamiento psicológico o psiquiátrico sanitario cuando existe un problema clínico que requiere intervención especializada, diagnóstico o seguimiento médico. En esos casos, se recomendará acudir al profesional sanitario correspondiente.
-          </p>
-        </div>
-      </section>
-
       {/* CONTACTO */}
-      <section id="contacto" className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 rounded-[2rem] bg-[#173537] p-8 md:p-12 text-[#f7efe4]">
+      <section id="contacto" className="bg-[#e8dfd2] px-6 lg:px-10 py-24">
+        <div className="max-w-5xl mx-auto grid lg:grid-cols-[0.9fr_1.1fr] gap-16">
           <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#d7bd8d]">
+            <p className="text-sm uppercase tracking-[0.3em] text-[#8a6d4d]">
               Contacto
             </p>
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
-              Empezar no tiene que ser perfecto. Solo suficientemente honesto.
+
+            <h2 className="mt-4 text-4xl md:text-5xl font-semibold text-[#173537]">
+              Si has llegado hasta aquí, probablemente ya sabes que algo necesita cambiar.
             </h2>
-            <p className="mt-6 text-lg leading-8 text-[#f7efe4]/75">
-              Puedes escribir para pedir una primera sesión, resolver dudas o valorar si este espacio encaja con tu momento actual.
+
+            <p className="mt-8 text-lg leading-8 text-[#425756]">
+              Primera toma de contacto sin compromiso para valorar si este espacio puede ayudarte.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a href="https://wa.me/" className="rounded-full bg-[#d7bd8d] px-7 py-3 text-[#173537] font-medium hover:bg-[#e4cca0] transition">
-                ✉ WhatsApp
-              </a>
-              <a href="#" className="rounded-full border border-[#f7efe4]/25 px-7 py-3 text-[#f7efe4] hover:bg-[#f7efe4]/10 transition">
-                Instagram
-              </a>
+
+            <div className="mt-10 space-y-4 text-[#173537]">
+              <p>📍 Garraf · Sitges · Vilanova</p>
+              <p>💻 Acompañamiento online próximamente</p>
+              <p>📱 WhatsApp: 618 430 395</p>
+              <p>📧 contacto@carlosojedaterapia.com</p>
             </div>
           </div>
 
-          <form className="space-y-4 rounded-3xl bg-[#f7efe4] p-6 text-[#173537]">
-            <input className="w-full rounded-2xl border border-[#d8c9b5] bg-white px-4 py-3 outline-none focus:border-[#8a6d4d]" placeholder="Nombre" />
-            <input className="w-full rounded-2xl border border-[#d8c9b5] bg-white px-4 py-3 outline-none focus:border-[#8a6d4d]" placeholder="Email" />
-            <textarea className="min-h-32 w-full rounded-2xl border border-[#d8c9b5] bg-white px-4 py-3 outline-none focus:border-[#8a6d4d]" placeholder="Cuéntame brevemente qué te gustaría trabajar" />
-            <button className="w-full rounded-full bg-[#173537] py-4 text-[#f7efe4] hover:bg-[#24484a] transition">
-              Enviar mensaje
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-4 rounded-[32px] bg-[#f7efe4] p-6 text-[#173537]"
+          >
+            <input
+              name="nombre"
+              className="w-full rounded-2xl border border-[#d8c9b5] bg-white px-4 py-3 outline-none focus:border-[#8a6d4d]"
+              placeholder="Nombre"
+            />
+
+            <input
+              name="email"
+              type="email"
+              className="w-full rounded-2xl border border-[#d8c9b5] bg-white px-4 py-3 outline-none focus:border-[#8a6d4d]"
+              placeholder="Correo electrónico"
+            />
+
+            <textarea
+              name="mensaje"
+              className="min-h-32 w-full rounded-2xl border border-[#d8c9b5] bg-white px-4 py-3 outline-none focus:border-[#8a6d4d]"
+              placeholder="¿Qué te gustaría trabajar?"
+            />
+
+            <button
+              type="submit"
+              className="w-full rounded-full bg-[#173537] py-4 text-[#f7efe4] hover:bg-[#24484a] transition"
+            >
+              Enviar por WhatsApp
             </button>
+
             <p className="text-xs leading-5 text-[#6b7371]">
-              Este formulario es una maqueta. Para publicarlo habrá que conectarlo a un servicio real de contacto o reservas.
+              Al enviar, se abrirá WhatsApp con tu mensaje preparado. No se almacena ningún dato desde esta página.
             </p>
           </form>
         </div>
       </section>
 
+      {/* FOOTER */}
       <footer className="border-t border-[#d8c9b5] px-6 lg:px-10 py-10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-4 text-sm text-[#56605e]">
-          <p>© Carlos Ojeda · Terapia. Marca provisional.</p>
-          <p>Terapia · Ansiedad · Adicciones · Procesos de cambio · Garraf / Vilanova / Sitges</p>
+          <p>© Carlos Ojeda · Mentoría terapéutica</p>
+
+          <p>
+            Ansiedad · Adicciones · Procesos de cambio · Garraf
+          </p>
         </div>
       </footer>
+
+      {/* BOTÓN FLOTANTE WHATSAPP */}
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noreferrer"
+        className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-3xl text-white shadow-2xl hover:scale-105 transition"
+        aria-label="Contactar por WhatsApp"
+      >
+        ☎
+      </a>
     </main>
   )
 }
